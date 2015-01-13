@@ -1,2 +1,3 @@
-Simple stupid irc bot written in NodeJS
-Uses node-irc library: "npm install irc"
+Simple stupid irc bot written in NodeJS for learning purposes and fun.
+Not intended to be put in actual use...
+Uses node and node-irc library get: "npm install irc"
