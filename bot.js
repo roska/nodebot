@@ -47,10 +47,10 @@ bot.addListener("pm", function(nick, text, message) {
 
 function cmdRespond(nick, to, text, message) {
 	//used only for learning (:
-	console.log(nick);
+	/*console.log(nick);
 	console.log(to);
 	console.log(text);
-	console.log(message);	
+	console.log(message);	*/
 	/*	nick 	= sender
 		to 		= receiver (user/channel)
 		text 	= what characters the user typed!
@@ -83,7 +83,10 @@ function cmdRespond(nick, to, text, message) {
 		case '.?' : // print help
 			botCommands(destination);
 			break;
-		case '.q ' || '.quote' :
+		case '.quote' :
+			quote(destination);
+			break; 
+		case '.q' :
 			quote(destination);
 			break; 
 	}
@@ -124,8 +127,11 @@ function getWeather(destination, cityName, countryCode) {
 	});
 
 	var downloadNewData = true;
-	/*	check if weather data exists already, print it and prevent new get... */
+	
+	/*	check if weather data exists already, print it and prevent new get... 
+		why the fuck does this not work?	*/
 	for (var i = 0; i <= weatherData.length -1; ++i) {
+		console.log("loop checking existing data");
 		if (weatherData[i].name == cityName) {
 
 			//same bit as in get..... make function?!!
@@ -152,8 +158,8 @@ function getWeather(destination, cityName, countryCode) {
 				body += chunk;
 			});
 			res.on('end', function() {
-				var data = JSON.parse(body)
-
+				var data = JSON.parse(body);
+				console.log("loaded weather data");
 				if (data.cod != 200) {
 					bot.say(destination, "Error: Requested data was not found.");
 					console.log("Error: Requested data was not found.")
@@ -166,6 +172,7 @@ function getWeather(destination, cityName, countryCode) {
 					bot.say(destination, data.weather[0].description);
 					//add the new data to up-to-date array...
 					weatherData.push(data);
+					console.log("asldfjasfa: " + weatherData[0].name);
 				}
 			});
 		});
@@ -191,20 +198,21 @@ function rollDice(destination, min, max) {
 }
 
 function quote(destination) {
-	http.get("http://www.iheartquotes.com/api/v1/random", function(res) {
+	http.get("http://www.iheartquotes.com/api/v1/random?format=json", function(res) {
 		var body = '';
+
+		res.on('error', function() {
+			console.log("quote errror");
+		})
 
 		res.on('data', function(chunk) {
 			body += chunk;
 		});
 		res.on('end', function() {
-			//remove link for the quote; way too long string to send...maybe parse and store if for LastQuoteSource-command or something?
-			quote = body.slice(0, body.indexOf('['));
-			//remove empty spaces from beginning and end of the string
-			quote = quote.trim();
+			quote = JSON.parse(body);
 			//don't flood....change the string length as you please...
-			if (quote.length < 300) {
-				bot.say(destination, quote);
+			if (quote.quote.length < 300) {
+				bot.say(destination, quote.quote);
 			} else {
 				bot.say(destination, "Sigh. These quotations are so long.. CBA to flood all of them.. ask for a new one!");
 			}
