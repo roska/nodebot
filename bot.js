@@ -174,7 +174,7 @@ function getWeather(destination, cityName, countryCode) {
 					bot.say(destination, data.weather[0].description);
 					//add the new data to up-to-date array...
 					weatherData.push(data);
-					console.log("WeatherData: " weatherData);
+					console.log("WeatherData: " + weatherData);
 				} else {
 					bot.say(destination, "Couldn't find weather data.");
 				}
