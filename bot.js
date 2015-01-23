@@ -135,9 +135,9 @@ function getWeather(destination, cityName, countryCode) {
 		if (weatherData[i].name == cityName) {
 
 			//same bit as in get..... make function?!!
-			bot.say(destination, weatherData[i].name + ", " + weatherData[i].sys.country);			
+			bot.say(destination, weatherData[i].main.temp - 273.15 + " | "+weatherData[i].name + ", " + weatherData[i].sys.country);			
 			// Kelvin - 273.15 = Celcius
-			bot.say(destination, weatherData[i].main.temp - 273.15);
+			//bot.say(destination, weatherData[i].main.temp - 273.15);
 			bot.say(destination, weatherData[i].weather[0].description);
 			downloadNewData = false;
 			console.log("didn't have to download new data!");
@@ -166,10 +166,10 @@ function getWeather(destination, cityName, countryCode) {
 						console.log("Error: Requested data was not found.")
 					} else if (data != null) {
 						//add timestamp to know if the weatherdata is dated.
-						data.timestamp = Date.now();
-						bot.say(destination, data.name + ", " + data.sys.country);
+						data.timestamp = Date.now();						
+						bot.say(destination, (weatherData[i].main.temp - 273.15).toPrecision(2) + " | "+weatherData[i].name + ", " + weatherData[i].sys.country);	
 						// Kelvin - 273.15 = Celcius
-						bot.say(destination, data.main.temp - 273.15);
+						//bot.say(destination, data.main.temp - 273.15);
 						bot.say(destination, data.weather[0].description);
 						//add the new data to up-to-date array...
 						weatherData.push(data);
@@ -211,8 +211,8 @@ function quote(destination) {
 	http.get("http://www.iheartquotes.com/api/v1/random?format=json", function(res) {
 		var body = '';
 
-		res.on('error', function() {
-			console.log("quote errror");
+		res.on('error', function(e) {
+			console.log("quote errror" + e.message);
 		})
 
 		res.on('data', function(chunk) {
