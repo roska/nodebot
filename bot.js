@@ -9,7 +9,7 @@ var weatherData = [];
 var config = {
 	channels: ["#roskasTestGround"],
 	server: "irc.quakenet.org",
-	botName: "roskasNodeBot"
+	botName: "JakR-bot"
 };
 
 var bot = new irc.Client(config.server, config.botName, { 
@@ -158,12 +158,14 @@ function getWeather(destination, cityName, countryCode) {
 				body += chunk;
 			});
 			res.on('end', function() {
-				var data = JSON.parse(body);
+				if (data != null) {
+					var data = JSON.parse(body);
+				}
 				console.log("loaded weather data");
 				if (data.cod != 200) {
 					bot.say(destination, "Error: Requested data was not found.");
 					console.log("Error: Requested data was not found.")
-				} else {
+				} else if (data != null) {
 					//add timestamp to know if the weatherdata is dated.
 					data.timestamp = Date.now();
 					bot.say(destination, data.name + ", " + data.sys.country);
@@ -172,7 +174,9 @@ function getWeather(destination, cityName, countryCode) {
 					bot.say(destination, data.weather[0].description);
 					//add the new data to up-to-date array...
 					weatherData.push(data);
-					console.log("asldfjasfa: " + weatherData[0].name);
+					console.log("WeatherData: " weatherData);
+				} else {
+					bot.say(destination, "Couldn't find weather data.");
 				}
 			});
 		});
