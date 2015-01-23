@@ -47,10 +47,10 @@ bot.addListener("pm", function(nick, text, message) {
 /* forever loop to shout out random things 3000000 = 50min */
 (function loop() {
 	setTimeout(function() {
-		shout();
+		//shout();
 		rollDice("#roskasTestGround", 1, 100);
 		loop();
-	}, 30000);
+	}, 3000000);
 }());
 
 
