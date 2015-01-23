@@ -160,21 +160,24 @@ function getWeather(destination, cityName, countryCode) {
 			res.on('end', function() {
 				if (data != null) {
 					var data = JSON.parse(body);
-				}
-				console.log("loaded weather data");
-				if (data.cod != 200) {
-					bot.say(destination, "Error: Requested data was not found.");
-					console.log("Error: Requested data was not found.")
-				} else if (data != null) {
-					//add timestamp to know if the weatherdata is dated.
-					data.timestamp = Date.now();
-					bot.say(destination, data.name + ", " + data.sys.country);
-					// Kelvin - 273.15 = Celcius
-					bot.say(destination, data.main.temp - 273.15);
-					bot.say(destination, data.weather[0].description);
-					//add the new data to up-to-date array...
-					weatherData.push(data);
-					console.log("WeatherData: " + weatherData);
+				
+					console.log("loaded weather data");
+					if (data.cod != 200) {
+						bot.say(destination, "Error: Requested data was not found.");
+						console.log("Error: Requested data was not found.")
+					} else if (data != null) {
+						//add timestamp to know if the weatherdata is dated.
+						data.timestamp = Date.now();
+						bot.say(destination, data.name + ", " + data.sys.country);
+						// Kelvin - 273.15 = Celcius
+						bot.say(destination, data.main.temp - 273.15);
+						bot.say(destination, data.weather[0].description);
+						//add the new data to up-to-date array...
+						weatherData.push(data);
+						console.log("WeatherData: " + weatherData);
+					} else {
+						bot.say(destination, "Couldn't find weather data.");
+					}
 				} else {
 					bot.say(destination, "Couldn't find weather data.");
 				}
