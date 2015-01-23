@@ -83,12 +83,12 @@ function cmdRespond(nick, to, text, message) {
 		case '.?' : // print help
 			botCommands(destination);
 			break;
-		/*case '.quote' :
+		case '.quote' :
 			quote(destination);
 			break; 
 		case '.q' :
 			quote(destination);
-			break; */
+			break; 
 	}
 }
 
@@ -150,7 +150,7 @@ function getWeather(destination, cityName, countryCode) {
 			var body = '';
 
 			res.on('error', function(er) {
-				console.log("Error: " + er.message);
+				console.log("Weather error: " + er.message);
 				bot.say(destination, "Error: " + er.message);
 			});
 
@@ -180,7 +180,7 @@ function getWeather(destination, cityName, countryCode) {
 				
 			});
 		}).on('error', function(e) {
-			console.log("Error: " + e.message);
+			console.log("Weather error: " + e.message);
 			bot.say(destination, "Error: " + e.message);
 		});
 	}
@@ -194,12 +194,13 @@ function weatherPrint(destination, data) {
 }*/
 
 function rollDice(destination, min, max) {
-
-
 	//set default if both are not given...
-	if (min == null && max == null) {
+	if (min == null || max == null) {
 		min = 1;
 		max = 100;
+	}
+	// if one value is not given and not both, print out the syntax
+	if ((min != null && max == null) || (min == null && max != null)) {		
 		bot.say(destination, ".roll <min> <max> is the correct syntax!");
 	}
 	var rnd = Math.floor((Math.random() * max) + min);
@@ -226,6 +227,8 @@ function quote(destination) {
 				bot.say(destination, "Sigh. These quotations are so long.. CBA to flood all of them.. ask for a new one!");
 			}
 		});
+	}).on('error', function(e) {
+		console.log("Quote error: " + e.message);
 	});
 }
 
