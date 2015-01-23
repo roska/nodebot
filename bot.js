@@ -158,7 +158,6 @@ function getWeather(destination, cityName, countryCode) {
 				body += chunk;
 			});
 			res.on('end', function() {
-				if (data != null) {
 					var data = JSON.parse(body);
 				
 					console.log("loaded weather data");
@@ -178,9 +177,7 @@ function getWeather(destination, cityName, countryCode) {
 					} else {
 						bot.say(destination, "Couldn't find weather data.");
 					}
-				} else {
-					bot.say(destination, "Couldn't find weather data.");
-				}
+				
 			});
 		}).on('error', function(e) {
 			console.log("Error: " + e.message);
