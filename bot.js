@@ -167,7 +167,7 @@ function getWeather(destination, cityName, countryCode) {
 					} else if (data != null) {
 						//add timestamp to know if the weatherdata is dated.
 						data.timestamp = Date.now();						
-						bot.say(destination, (weatherData[i].main.temp - 273.15).toPrecision(2) + " | "+weatherData[i].name + ", " + weatherData[i].sys.country);	
+						bot.say(destination, (data.main.temp - 273.15).toPrecision(2) + " | "+ data.name + ", " + data.sys.country);	
 						// Kelvin - 273.15 = Celcius
 						//bot.say(destination, data.main.temp - 273.15);
 						bot.say(destination, data.weather[0].description);
