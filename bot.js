@@ -182,6 +182,9 @@ function getWeather(destination, cityName, countryCode) {
 					bot.say(destination, "Couldn't find weather data.");
 				}
 			});
+		}).on('error', function(e) {
+			console.log("Error: " + e.message);
+			bot.say(destination, "Error: " + e.message);
 		});
 	}
 }
@@ -194,11 +197,13 @@ function weatherPrint(destination, data) {
 }*/
 
 function rollDice(destination, min, max) {
+
+
 	//set default if both are not given...
-	if (min == null || max == null) {
+	if (min == null && max == null) {
 		min = 1;
 		max = 100;
-		bot.say(destination, ".roll <min> <max> is the correct syntax you twat!");
+		bot.say(destination, ".roll <min> <max> is the correct syntax!");
 	}
 	var rnd = Math.floor((Math.random() * max) + min);
 	bot.say(destination, "You rolled: " + rnd);
