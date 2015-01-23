@@ -7,7 +7,7 @@ var weatherData = [];
 
 /*	add your bot configurations here */
 var config = {
-	channels: ["#roskasTestGround", "#roskasTestGround2"],
+	channels: ["#roskasTestGround"],
 	server: "irc.quakenet.org",
 	botName: "roskasNodeBot"
 };
@@ -83,12 +83,12 @@ function cmdRespond(nick, to, text, message) {
 		case '.?' : // print help
 			botCommands(destination);
 			break;
-		case '.quote' :
+		/*case '.quote' :
 			quote(destination);
 			break; 
 		case '.q' :
 			quote(destination);
-			break; 
+			break; */
 	}
 }
 
