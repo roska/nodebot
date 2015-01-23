@@ -83,12 +83,12 @@ function cmdRespond(nick, to, text, message) {
 		case '.?' : // print help
 			botCommands(destination);
 			break;
-		case '.quote' :
+		/*case '.quote' :
 			quote(destination);
 			break; 
 		case '.q' :
 			quote(destination);
-			break; 
+			break; */
 	}
 }
 
@@ -198,10 +198,6 @@ function rollDice(destination, min, max) {
 	if (min == null || max == null) {
 		min = 1;
 		max = 100;
-	}
-	// if one value is not given and not both, print out the syntax
-	if ((min != null && max == null) || (min == null && max != null)) {		
-		bot.say(destination, ".roll <min> <max> is the correct syntax!");
 	}
 	var rnd = Math.floor((Math.random() * max) + min);
 	bot.say(destination, "You rolled: " + rnd);
