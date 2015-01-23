@@ -44,6 +44,15 @@ bot.addListener("pm", function(nick, text, message) {
 });
 
 
+/* forever loop to shout out random things 3000000 = 50min */
+(function loop() {
+	setTimeout(function() {
+		shout();
+		rollDice("#roskasTestGround", 1, 100);
+		loop();
+	}, 30000);
+}());
+
 
 function cmdRespond(nick, to, text, message) {
 	//used only for learning (:
@@ -199,7 +208,7 @@ function rollDice(destination, min, max) {
 		min = 1;
 		max = 100;
 	}
-	var rnd = Math.floor((Math.random() * max) + min);
+	var rnd = Math.floor((Math.random() * max - min) + min);
 	bot.say(destination, "You rolled: " + rnd);
 }
 
@@ -228,6 +237,15 @@ function quote(destination) {
 	});
 }
 
+function shout() {
+	var rnd = Math.round(Math.random() * (10 - 1) + 1);
+	if (rnd > 5) {
+		bot.say("#roskasTestGround", "Greater than 5!");
+	} else {
+		bot.say("#roskasTestGround", "Less than 5!");
+	}
+		
+}
 // tee nopan heitto funktio!! :D ja muut tärkeät!
 // noppa roll
 // random huutelu
