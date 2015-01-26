@@ -103,7 +103,7 @@ function cmdRespond(nick, to, text, message) {
 	if (param[0] == '.saa') {
 		getWeather(destination, param[1], param[2]);
 	} else if (param[0] == '.q') { 
-		quote(destination);
+		quote();
 	}
 }
 
