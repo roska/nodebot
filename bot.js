@@ -96,7 +96,7 @@ function cmdRespond(nick, to, text, message) {
 			quote(destination);
 			break; */
 		case '.q' :
-			quote;
+			setTimeout(quote, 1000);
 			break; 
 	}
 }
