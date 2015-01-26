@@ -94,10 +94,12 @@ function cmdRespond(nick, to, text, message) {
 			break;
 		/*case '.quote' :
 			quote(destination);
-			break; 
-		case '.q' :
-			quote(destination);
 			break; */
+		case '.q' :
+			function() {
+				quote(destination);
+			}
+			break; 
 	}
 }
 
@@ -250,6 +252,8 @@ function shout() {
 // noppa roll
 // random huutelu
 // nimipäivä
+// linkit täältä tietokantaan!
+// sitten sivu mistä voi kattoa ne..
 
 /* käytä looppia ja tee quoteja huuteleva ärsyttävä paskiainen :D */
 
