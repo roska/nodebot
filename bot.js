@@ -103,7 +103,30 @@ function cmdRespond(nick, to, text, message) {
 	if (param[0] == '.saa') {
 		getWeather(destination, param[1], param[2]);
 	} else if (param[0] == '.q') { 
-		quote();
+		var dest = "#roskasTestGround";
+		http.get("http://www.iheartquotes.com/api/v1/random?format=json", function(res) {
+		var body = '';
+
+		res.on('error', function(e) {
+			console.log("quote errror" + e.message);
+		})
+
+		res.on('data', function(chunk) {
+			body += chunk;
+		});
+		res.on('end', function() {
+			quote = JSON.parse(body);
+			console.log(quote.quote);
+			//don't flood....change the string length as you please...
+			if (quote.quote.length < 300) {
+				bot.say(dest, quote.quote);
+			} else {
+				bot.say(dest, "Sigh. These quotations are so long.. CBA to flood all of them.. ask for a new one!");
+			}
+		});
+	}).on('error', function(e) {
+		console.log("Quote error: " + e.message);
+	});
 	}
 }
 
@@ -246,30 +269,7 @@ function quote(destination) {
 
 
 function quote() {
-	var dest = "#roskasTestGround";
-	http.get("http://www.iheartquotes.com/api/v1/random?format=json", function(res) {
-		var body = '';
-
-		res.on('error', function(e) {
-			console.log("quote errror" + e.message);
-		})
-
-		res.on('data', function(chunk) {
-			body += chunk;
-		});
-		res.on('end', function() {
-			quote = JSON.parse(body);
-			console.log(quote.quote);
-			//don't flood....change the string length as you please...
-			if (quote.quote.length < 300) {
-				bot.say(dest, quote.quote);
-			} else {
-				bot.say(dest, "Sigh. These quotations are so long.. CBA to flood all of them.. ask for a new one!");
-			}
-		});
-	}).on('error', function(e) {
-		console.log("Quote error: " + e.message);
-	});
+	
 }
 
 function shout() {
