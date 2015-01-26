@@ -96,7 +96,7 @@ function cmdRespond(nick, to, text, message) {
 			quote(destination);
 			break; */
 		case '.q' :
-			bot.say(destination, quote());
+			bot.say(destination, quote;
 			break; 
 	}
 }
@@ -237,8 +237,12 @@ function quote(destination) {
 	});
 }
 */
-
 function quote() {
+	var a = HaeQuote();
+	return a;
+}
+
+function HaeQuote() {
 	http.get("http://www.iheartquotes.com/api/v1/random?format=json", function(res) {
 		var body = '';
 
@@ -251,6 +255,7 @@ function quote() {
 		});
 		res.on('end', function() {
 			quote = JSON.parse(body);
+			console.log(quote.quote);
 			//don't flood....change the string length as you please...
 			if (quote.quote.length < 300) {
 				return quote.quote;
