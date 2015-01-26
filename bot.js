@@ -96,7 +96,7 @@ function cmdRespond(nick, to, text, message) {
 			quote(destination);
 			break; */
 		case '.q' :
-			bot.say(destination, quote);
+			quote(destination);
 			break; 
 	}
 }
@@ -237,12 +237,12 @@ function quote(destination) {
 	});
 }
 */
-function quote() {
-	var a = HaeQuote();
+function quote(dest) {
+	var a = HaeQuote(dest);
 	return a;
 }
 
-function HaeQuote() {
+function HaeQuote(dest) {
 	http.get("http://www.iheartquotes.com/api/v1/random?format=json", function(res) {
 		var body = '';
 
@@ -258,9 +258,9 @@ function HaeQuote() {
 			console.log(quote.quote);
 			//don't flood....change the string length as you please...
 			if (quote.quote.length < 300) {
-				return quote.quote;
+				bot.say(dest, quote.quote);
 			} else {
-				return "Sigh. These quotations are so long.. CBA to flood all of them.. ask for a new one!";
+				bot.say(dest, "Sigh. These quotations are so long.. CBA to flood all of them.. ask for a new one!");
 			}
 		});
 	}).on('error', function(e) {
