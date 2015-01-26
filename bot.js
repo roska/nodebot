@@ -237,12 +237,9 @@ function quote(destination) {
 	});
 }
 */
-function quote(dest) {
-	var a = HaeQuote(dest);
-	return a;
-}
 
-function HaeQuote(dest) {
+
+function quote(dest) {
 	http.get("http://www.iheartquotes.com/api/v1/random?format=json", function(res) {
 		var body = '';
 
