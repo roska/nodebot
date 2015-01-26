@@ -96,9 +96,7 @@ function cmdRespond(nick, to, text, message) {
 			quote(destination);
 			break; */
 		case '.q' :
-			function() {
-				quote(destination);
-			}
+			bot.say(destination, quote);
 			break; 
 	}
 }
@@ -213,7 +211,7 @@ function rollDice(destination, min, max) {
 	var rnd = Math.floor((Math.random() * max - min) + min);
 	bot.say(destination, "You rolled: " + rnd);
 }
-
+/*
 function quote(destination) {
 	http.get("http://www.iheartquotes.com/api/v1/random?format=json", function(res) {
 		var body = '';
@@ -232,6 +230,32 @@ function quote(destination) {
 				bot.say(destination, quote.quote);
 			} else {
 				bot.say(destination, "Sigh. These quotations are so long.. CBA to flood all of them.. ask for a new one!");
+			}
+		});
+	}).on('error', function(e) {
+		console.log("Quote error: " + e.message);
+	});
+}
+*/
+
+function quote(destination) {
+	http.get("http://www.iheartquotes.com/api/v1/random?format=json", function(res) {
+		var body = '';
+
+		res.on('error', function(e) {
+			console.log("quote errror" + e.message);
+		})
+
+		res.on('data', function(chunk) {
+			body += chunk;
+		});
+		res.on('end', function() {
+			quote = JSON.parse(body);
+			//don't flood....change the string length as you please...
+			if (quote.quote.length < 300) {
+				return quote.quote;
+			} else {
+				return "Sigh. These quotations are so long.. CBA to flood all of them.. ask for a new one!";
 			}
 		});
 	}).on('error', function(e) {
