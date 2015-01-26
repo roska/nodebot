@@ -96,7 +96,7 @@ function cmdRespond(nick, to, text, message) {
 			quote(destination);
 			break; */
 		case '.q' :
-			bot.say(destination, quote;
+			bot.say(destination, quote);
 			break; 
 	}
 }
