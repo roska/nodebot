@@ -36,11 +36,11 @@ bot.addListener("join", function(channel, who) {
 
 //listen for messages in channels
 bot.addListener("message", function(nick, to, text, message) {
-	cmdRespond(nick, to, text, message);
+	commandResponse(nick, to, text, message);
 });
 
 bot.addListener("pm", function(nick, text, message) {
-	cmdRespond(nick, null, text, message);
+	commandResponse(nick, null, text, message);
 });
 
 
@@ -54,7 +54,7 @@ bot.addListener("pm", function(nick, text, message) {
 }());
 
 
-function cmdRespond(nick, to, text, message) {
+function commandResponse(nick, to, text, message) {
 	//used only for learning (:
 	/*console.log(nick);
 	console.log(to);
@@ -81,7 +81,7 @@ function cmdRespond(nick, to, text, message) {
 
 	/*	Check for possible commands.
 		Functions are defined in lower in this file.*/
-/*
+
 	switch (param[0]) {
 		case '.saa' : //get weather!
 			getWeather(destination, param[1], param[2]);
@@ -93,41 +93,33 @@ function cmdRespond(nick, to, text, message) {
 			botCommands(destination);
 			break;
 		case '.quote' :
-			quote(destination);
-			break; 
-		case '.q' :
-			setTimeout(quote, 1000);
-			break; 
-	}*/
+			var dest = "#roskasTestGround";
+			http.get("http://www.iheartquotes.com/api/v1/random?format=json", function(res) {
+			var body = '';
 
-	if (param[0] == '.saa') {
-		getWeather(destination, param[1], param[2]);
-	} else if (param[0] == '.q') { 
-		var dest = "#roskasTestGround";
-		http.get("http://www.iheartquotes.com/api/v1/random?format=json", function(res) {
-		var body = '';
+			res.on('error', function(e) {
+				console.log("quote errror" + e.message);
+			})
 
-		res.on('error', function(e) {
-			console.log("quote errror" + e.message);
-		})
-
-		res.on('data', function(chunk) {
-			body += chunk;
-		});
-		res.on('end', function() {
+			res.on('data', function(chunk) {
+				body += chunk;
+			});
+			res.on('end', function() {
 			quote = JSON.parse(body);
 			console.log(quote.quote);
 			//don't flood....change the string length as you please...
-			if (quote.quote.length < 300) {
+			if (quote.quote.length < 600) {
 				bot.say(dest, quote.quote);
 			} else {
 				bot.say(dest, "Sigh. These quotations are so long.. CBA to flood all of them.. ask for a new one!");
 			}
-		});
-	}).on('error', function(e) {
-		console.log("Quote error: " + e.message);
-	});
+				});
+			}).on('error', function(e) {
+				console.log("Quote error: " + e.message);
+			});
+			break;
 	}
+
 }
 
 /*	Help
