@@ -96,7 +96,7 @@ function cmdRespond(nick, to, text, message) {
 			quote(destination);
 			break; */
 		case '.q' :
-			quote(destination);
+			quote;
 			break; 
 	}
 }
@@ -239,7 +239,8 @@ function quote(destination) {
 */
 
 
-function quote(dest) {
+function quote() {
+	var dest = "#roskasTestGround";
 	http.get("http://www.iheartquotes.com/api/v1/random?format=json", function(res) {
 		var body = '';
 
