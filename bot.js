@@ -81,7 +81,7 @@ function cmdRespond(nick, to, text, message) {
 
 	/*	Check for possible commands.
 		Functions are defined in lower in this file.*/
-
+/*
 	switch (param[0]) {
 		case '.saa' : //get weather!
 			getWeather(destination, param[1], param[2]);
@@ -92,12 +92,18 @@ function cmdRespond(nick, to, text, message) {
 		case '.?' : // print help
 			botCommands(destination);
 			break;
-		/*case '.quote' :
+		case '.quote' :
 			quote(destination);
-			break; */
+			break; 
 		case '.q' :
 			setTimeout(quote, 1000);
 			break; 
+	}*/
+
+	if (param[0] == '.saa') {
+		getWeather(destination, param[1], param[2]);
+	} else if (param[0] == '.q') { 
+		quote(destination);
 	}
 }
 
